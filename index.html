@@ -1,283 +1,818 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="uz">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Ma'lumotli Sayt | Zamonaviy Web Shablonlar</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Yuklanish animatsiyasi */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        /* Gradient fonlar */
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Silliq scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Hover effektlari */
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Dark mode uchun */
+        .dark-mode {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+
+        /* Progress bar */
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring__circle {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(90deg);
+            transform-origin: 50% 50%;
+        }
+    </style>
 </head>
 
-<body>
-    <nav class="bg-slate-100 p-4">
-        <div class="container mx-auto flex gap-5 justify-content-between">
-            <div class="flex gap-2 items-center">
-                <h1 class="bg-blue-500 font-bold text-lg w-10 text-center text-white rounded-3 py-1 px-2"><span>M</span>
-                </h1>
-                <h2 class="mt-1 font-bold hover:text-blue-400 duration-700">Ma'lumotli Sayt</h2>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Yuqori navigatsiya -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex flex-wrap items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 font-bold text-white rounded-full flex items-center justify-center text-lg">
+                        <span>M</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-800 hover:text-blue-600 transition-colors duration-300">
+                        Ma'lumotli Sayt
+                    </h2>
+                </div>
+
+                <!-- Desktop navigatsiya -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#features" class="text-gray-600 hover:text-blue-600 transition-colors duration-300 font-medium">Xususiyatlar</a>
+                    <a href="#stats" class="text-gray-600 hover:text-blue-600 transition-colors duration-300 font-medium">Statistika</a>
+                    <a href="#pricing" class="text-gray-600 hover:text-blue-600 transition-colors duration-300 font-medium">Narxlar</a>
+                    <a href="#blog" class="text-gray-600 hover:text-blue-600 transition-colors duration-300 font-medium">Blog</a>
+                    <a href="#faq" class="text-gray-600 hover:text-blue-600 transition-colors duration-300 font-medium">FAQ</a>
+                </div>
+
+                <!-- O'ng tomondagi tugmalar -->
+                <div class="flex items-center gap-4">
+                    <!-- Dark/Light mode toggle -->
+                    <button id="themeToggle" class="w-10 h-10 rounded-full border border-gray-300 hover:border-blue-500 flex items-center justify-center transition-colors duration-300 bg-white">
+                        <i class="fas fa-moon text-gray-600"></i>
+                    </button>
+                    
+                    <!-- Boshlash tugmasi -->
+                    <button class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-medium py-2.5 px-6 rounded-full transition-all duration-300 shadow hover:shadow-lg">
+                        Boshlash
+                    </button>
+
+                    <!-- Mobil menyu tugmasi -->
+                    <button id="mobileMenuButton" class="md:hidden text-gray-700 w-10 h-10 rounded-lg hover:bg-gray-100 flex items-center justify-center">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
             </div>
-            <div>
-                <ul class="flex gap-3 items-center">
-                    <li><a href="" class="hover:text-blue-600 duration-500">Xsusiyatlar</a></li>
-                    <li><a href="" class="hover:text-blue-600 duration-500">Statistika</a></li>
-                    <li><a href="" class="hover:text-blue-600 duration-500">Narxlar</a></li>
-                    <li><a href="" class="hover:text-blue-600 duration-500">Blog</a></li>
-                    <li><a href="" class="hover:text-blue-600 duration-500">FAQ</a></li>
-                </ul>
-            </div>
-            <div class="items-center">
-                <span class="border-2 border-black rounded-2 bg-white me-2 py-2 px-2.5"><i
-                        class="fa-regular fa-moon"></i></span>
-                <button
-                    class="border bg-blue-400 text-white rounded-3 py-2 px-3 hover:bg-blue-700 duration-500">Boshlash</button>
+
+            <!-- Mobil menyu -->
+            <div id="mobileMenu" class="md:hidden hidden mt-4 bg-white rounded-lg shadow-lg p-4">
+                <div class="flex flex-col space-y-4">
+                    <a href="#features" class="text-gray-700 hover:text-blue-600 py-2 border-b border-gray-100">Xususiyatlar</a>
+                    <a href="#stats" class="text-gray-700 hover:text-blue-600 py-2 border-b border-gray-100">Statistika</a>
+                    <a href="#pricing" class="text-gray-700 hover:text-blue-600 py-2 border-b border-gray-100">Narxlar</a>
+                    <a href="#blog" class="text-gray-700 hover:text-blue-600 py-2 border-b border-gray-100">Blog</a>
+                    <a href="#faq" class="text-gray-700 hover:text-blue-600 py-2">FAQ</a>
+                </div>
             </div>
         </div>
     </nav>
-    <section class="mt-52">
-        <div class="container mx-auto flex gap-32 ">
-            <div class="mb-5">
-                <h1 class="font-bold text-4xl w-96 mb-3">Mahsulotingizni tez va ishonchli taqdim eting</h1>
-                <p class="max-w-lg mb-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda voluptate
-                    ad sit doloribus quaerat!</p>
-                <button class="border-2 p-3 mx-2 rounded-3 bg-blue-600 text-white">Rejalarni Ko'rish</button>
-                <button class="border-2 p-3 mx-2 rounded-3 mb-4">Ko'proq bilish</button>
-                <div class="flex gap-3 items-center">
-                    <img src="https://picsum.photos/70/70" class="rounded-2" alt="">
-                    <p>Lorem ipsum dolor sit amet consectetur.</p>
-                </div>
-            </div>
-            <div class="border-2 rounded-2 w-9/12 position-relative bottom-24 p-3">
-                <div class="border-2 rounded-2 max-w-5xl bg-blue-200 p-3 h-96 align-items-center text-center ">
-                    <p class="position-relative top-40">Lorem ipsum dolor sit.</p>
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div class="border-2 mt-3 max-w-1md p-2 px-3 rounded-2">
-                        <p class="mb-2">Lorem.</p>
-                        <h1 class="mb-2 font-bold">+38%</h1>
-                        <p class="mb-2">Lorem, ipsum.</p>
-                    </div>
-                    <div class="border-2 mt-3 max-w-1md p-2 px-3 rounded-2">
-                        <p class="mb-2">Lorem.</p>
-                        <h1 class="mb-2 font-bold">4.7X</h1>
-                        <p class="mb-2">Lorem, ipsum.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section>
-        <div class="container mx-auto">
-            <h1 class="text-2xl font-bold mb-3">Nima uchun ushbu shablom?</h1>
-            <p class="max-w-lg mb-4">Lorem ipsum, dolor sit amet consectetur adipisicing elit, Necessitatibus molestias.
-            </p>
-            <div class="grid grid-cols-3 gap-3">
-                <div class="border-2 p-3 rounded-2">
-                    <h1 class="px-3  mb-3 py-2 rounded-2 bg-blue-500 text-white border w-10"><span>1</span></h1>
-                    <h2 class="mb-3 font-bold">Tez Sozlash</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </div>
-                <div class="border-2 p-3 rounded-2">
-                    <h1 class="px-3 mb-3 py-2 rounded-2 bg-blue-500 text-white border w-10"><span>2</span></h1>
-                    <h2 class="mb-3 font-bold">Reponsive Dizayn</h2>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing.</p>
-                </div>
-                <div class="border-2 p-3 rounded-2">
-                    <h1 class="px-3 mb-3 py-2 rounded-2 bg-blue-500 text-white border w-10"><span>3</span></h1>
-                    <h2 class="mb-3 font-bold">Dark Dizayn</h2>
-                    <p>Lorem ipsum dolor sit amet.</p>
-                </div>
-                <div class="border-2 p-3 rounded-2">
-                    <h1 class="px-3 mb-3 py-2 rounded-2 bg-blue-500 text-white border w-10"><span>4</span></h1>
-                    <h2 class="mb-3 font-bold">SEO Tayyor</h2>
-                    <p>Lorem ipsum dolor sit amet.</p>
-                </div>
-                <div class="border-2 p-3 rounded-2">
-                    <h1 class="px-3 mb-3 py-2 rounded-2 bg-blue-500 text-white border w-10"><span>5</span></h1>
-                    <h2 class="mb-3 font-bold">Modulli Kompanentlar</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur.</p>
-                </div>
-                <div class="border-2 p-3 rounded-2">
-                    <h1 class="px-3 mb-3 py-2 rounded-2 bg-blue-500 text-white border w-10"><span>6</span></h1>
-                    <h2 class="mb-3 font-bold">Yangi Animatsiyalar</h2>
-                    Lorem ipsum dolor sit amet.
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="mt-28 bg-slate-50 p-20">
-        <div class="container mx-auto">
-            <div class="grid grid-cols-4 gap-3 text-center">
-                <div class="border-2 p-3 rounded">
-                    <h1 class="font-bold text-3xl">12k+</h1>
-                    <p>Foydalanuvchiar</p>
-                </div>
-                <div class="border-2 p-3 rounded">
-                    <h1 class="font-bold text-3xl">98%</h1>
-                    <p>Qoniqish Darajasi</p>
-                </div>
-                <div class="border-2 p-3 rounded">
-                    <h1 class="font-bold text-3xl">3.2s</h1>
-                    <p>O'rtacha Yuklanish</p>
-                </div>
-                <div class="border-2 p-3 rounded">
-                    <h1 class="font-bold text-3xl">27/7</h1>
-                    <p>Qollab-Quvatlash</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="mt-28">
-        <div class="container mx-auto">
-        <h1 class="font-bold text-2xl mb-2">Mijozlar fikri</h1>
-        <p class="mb-5">Ishonchli tajribalr va ijobiy tajribalar haqoda qisqacha.</p>
-        <div class="grid grid-cols-3 gap-3">
-            <div class="border-1 p-4 rounded-3">
-                <h1 class="mb-2">"Lorem ipsum dolor sit, amet consectetur adipisicing elit."</h1>
-                <p>-Javlon, Dev</p>
-            </div>
-            <div class="border-1 p-4 rounded-3">
-                <h1>"Lorem ipsum dolor sit, amet consectetur elit."</h1>
-                <p>-Laylo, PM</p>
-            </div>
-            <div class="border-1 p-4 rounded-3">
-                <h1>"Lorem ipsum dolor sit, consectetur elit."</h1>
-                <p>-Timur, QA</p>
-            </div>
-        </div>
-    </div>
-    </section>
-    <section class="mt-32">
-        <div class="container mx-auto">
-        <h1 class="font-bold text-2xl mb-2">Rejalar</h1>
-        <p class="mb-5">Oddiydan professionalgacha - ehtiyojingizga mos.</p>
-        <div class="grid grid-cols-3 gap-4">
-<div class="rounded-3 p-3 border-1">
-    <h1 class="font-bold mb-3">Basic</h1>
-    <h1 class="font-bold text-4xl mb-3">$0</h1>
-    <p class="mb-2">Statik sahifalar</p>
-    <p class="mb-2">CDN orqali Tailwind</p>
-    <p class="mb-3">Dark mode</p>
-    <button class="p-2 rounded border-black bg-black text-white">Boshlash</button>
-</div>
-<div class="rounded-3 p-3 border-blue-500 border-2">
-    <h1 class="font-bold mb-3">Pro</h1>
-    <h1 class="font-bold text-4xl mb-3">$29</h1>
-    <p class="mb-2">Qoshimcha komponentlar</p>
-    <p class="mb-2">Blog bolimi</p>
-    <p class="mb-3">Tezkor qollab-quvvatlash</p>
-    <button class="p-2 rounded border-blue-500 bg-blue-500 text-white">Boshlash</button>
-</div>
-<div class="rounded-3 p-3 border-1">
-    <h1 class="font-bold mb-3">Business</h1>
-    <h1 class="font-bold text-4xl mb-3">$79</h1>
-    <p class="mb-2">Team funksiyalar</p>
-    <p class="mb-2">Integratsiyalar</p>
-    <p class="mb-3">Uzoq muddatli support</p>
-    <button class="p-2 rounded border-black bg-black text-white">Boglanish</button>
-</div>
-        </div>
-    </div>
-    </section>
-    <section class="mt-32">
-        <div class="container mx-auto">
-<h1 class="font-bold text-2xl mb-2">Blog Yangiliklari</h1>
-<p class="mb-4">Songi maqollar va foydali qaollanmalar</p>
-<div class="grid grid-cols-3 gap-3">
-    <div class="border-1 p-3 rounded-3">
-        <img src="https://picsum.photos/500/190?random=1" class="rounded-3 mb-3" alt="">
-        <h1 class="mb-2 font-bold">Tailwind bilan tez start</h1>
-        <p class="mb-2">Lorem ipsum dolor sit amet.</p>
-        <div class="flex items-center gap-2">
-        <p class="text-blue-400">Oqish </p>
-        <i class="fa-solid fa-arrow-right mt-1 text-blue-400"></i>
-    </div>
-    </div>
-    <div class="border-1 p-3 rounded-3">
-        <img src="https://picsum.photos/500/190?random=2" class="rounded-3 mb-3" alt="">
-        <h1 class="mb-2 font-bold">SEO asoslari</h1>
-        <p class="mb-2">Lorem ipsum dolor sit amet.</p>
-        <div class="flex items-center gap-2">
-        <p class="text-blue-400">Oqish </p>
-        <i class="fa-solid fa-arrow-right mt-1 text-blue-400"></i>
-    </div>
-    </div>
-    <div class="border-1 p-3 rounded-3">
-        <img src="https://picsum.photos/500/190?random=3" class="rounded-3 mb-3" alt="">
-        <h1 class="mb-2 font-bold">Dizayn prinsiplar</h1>
-        <p class="mb-2">Lorem ipsum dolor sit amet.</p>
-        <div class="flex items-center gap-2">
-        <p class="text-blue-400">Oqish </p>
-        <i class="fa-solid fa-arrow-right mt-1 text-blue-400"></i>
-    </div>
-    </div>
-</div>
-</div>
-    </section>
-    <section class="mt-32">
-<div class="container mx-auto">
-    <h1 class="font-bold text-2xl mb-2">Kop soraladigan savollar</h1>
-<p class="mb-4">Tez-tez beriladigan savollarga javob.</p>
-<div class="grid grid-cols-2 gap-4">
-<div class="border-1 rounded-3 p-4">
-    <h1 class="font-bold mb-2">Tailwindni qanday ulayman?</h1>
-    <p>Lorem ipsum dolor sit consectetur adipisicing elit. </p>
-</div>
-<div class="border-1 rounded-3 p-4">
-    <h1 class="font-bold mb-2">Dark mode qanday ishlaydi?</h1>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
-</div>
-<div class="border-1 rounded-3 p-4">
-    <h1 class="font-bold mb-2">SEO uchun nimalar qildik?</h1>
-    <p>Lorem ipsum dolor sit adipisicing elit. </p>
-</div>
-<div class="border-1 rounded-3 p-4">
-    <h1 class="font-bold mb-2">Qanday kengaytiraman?</h1>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
-</div>
-</div>
-</div>
-    </section>
-    <footer class="mt-32">
-        <div class="container mx-auto">
-            <div class="grid grid-cols-4 gap-16">
-                <div>
-        <h1 class="font-bold">Brend</h1>
-        <p>Chiroyli va ma'malumotli shablonlar</p>
-    </div>
-    <div>
-        <h1 class="font-bold mb-3">Havolalar</h1>
-        <ul>
-            <li class="mb-2">Xsusiyatlar</li>
-            <li class="mb-2">Narhlar</li>
-            <li class="mb-2">Blog</li>
-            <li>FAQ</li>
-        </ul>
-    </div>
-    <div>
-        <h1 class="mb-3 font-bold">Huquqiy</h1>
-        <ul>
-            <li class="mb-2">Shartlar</li>
-            <li class="mb-2">Maxfiylik</li>
-        </ul>
-    </div>
-    <div>
-        <h1 class="font-bold mb-3">Obuna</h1>
-        <form action="">
-            <input type="email" placeholder="Email" class="border-1 p-2 rounded-2">
-            <button class="p-2 m-2 border-blue-500 rounded-2 bg-blue-500 text-white">Yuborish</button>
-        </form>
-    </div>
-    </div>
-    </div>
-    <div class="mt-16 bg-slate-100 p-10">
-        <p>C 2025 Ma'lumotli Sayt. Barcha huquqlar himoyalangan.</p>
-    </div>
-    </footer>
-</body>
 
+    <!-- Hero bo'limi -->
+    <section class="pt-20 pb-16 md:pt-32 md:pb-24 px-4">
+        <div class="container mx-auto">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
+                <!-- Matn qismi -->
+                <div class="lg:w-1/2 fade-in-up">
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                        Mahsulotingizni <span class="gradient-text">tez va ishonchli</span> taqdim eting
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-8 max-w-xl">
+                        Zamonaviy web-shablonlar bilan biznesingizni rivojlantiring. 5+ yillik tajriba va 1000+ muvaffaqiyatli loyihalar.
+                    </p>
+                    <div class="flex flex-wrap gap-4 mb-10">
+                        <button class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium py-3 px-8 rounded-full transition-all duration-300 shadow hover:shadow-lg">
+                            Rejalarni Ko'rish
+                        </button>
+                        <button class="border border-gray-300 hover:border-blue-500 text-gray-700 hover:text-blue-600 font-medium py-3 px-8 rounded-full transition-all duration-300">
+                            <i class="fas fa-play-circle mr-2"></i> Demo Ko'rish
+                        </button>
+                    </div>
+                    
+                    <!-- Foydalanuvchilar -->
+                    <div class="flex items-center gap-4">
+                        <div class="flex -space-x-3">
+                            <div class="w-12 h-12 rounded-full border-2 border-white overflow-hidden">
+                                <img src="https://i.pravatar.cc/150?img=1" alt="Foydalanuvchi" class="w-full h-full object-cover">
+                            </div>
+                            <div class="w-12 h-12 rounded-full border-2 border-white overflow-hidden">
+                                <img src="https://i.pravatar.cc/150?img=2" alt="Foydalanuvchi" class="w-full h-full object-cover">
+                            </div>
+                            <div class="w-12 h-12 rounded-full border-2 border-white overflow-hidden">
+                                <img src="https://i.pravatar.cc/150?img=3" alt="Foydalanuvchi" class="w-full h-full object-cover">
+                            </div>
+                            <div class="w-12 h-12 rounded-full border-2 border-white bg-blue-100 flex items-center justify-center">
+                                <span class="text-blue-600 font-bold">+50</span>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="font-medium text-gray-800">500+ rozi foydalanuvchilar</p>
+                            <p class="text-sm text-gray-500">Har oy yangi mijozlar qo'shilmoqda</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rasmlar/Statistika qismi -->
+                <div class="lg:w-1/2 relative fade-in-up" style="animation-delay: 0.2s">
+                    <div class="relative">
+                        <!-- Asosiy kontener -->
+                        <div class="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-6 shadow-xl border border-blue-100">
+                            <!-- Mockup device -->
+                            <div class="bg-white rounded-xl p-4 mb-6 shadow-lg">
+                                <div class="flex gap-2 mb-4">
+                                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+                                </div>
+                                <div class="grid grid-cols-3 gap-4">
+                                    <div class="h-24 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg"></div>
+                                    <div class="h-24 bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg"></div>
+                                    <div class="h-24 bg-gradient-to-br from-green-100 to-green-200 rounded-lg"></div>
+                                </div>
+                            </div>
+
+                            <!-- Statistika kartalari -->
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-white rounded-xl p-4 shadow-md hover-lift">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm font-medium text-gray-600">O'sish</span>
+                                        <span class="text-green-500 font-bold">+38%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-green-500 h-2 rounded-full" style="width: 38%"></div>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-2">Oylik trafik o'sishi</p>
+                                </div>
+
+                                <div class="bg-white rounded-xl p-4 shadow-md hover-lift">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm font-medium text-gray-600">Samaradorlik</span>
+                                        <span class="text-purple-500 font-bold">4.7X</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-purple-500 h-2 rounded-full" style="width: 85%"></div>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-2">Ish unumdorligi</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dekorativ elementlar -->
+                        <div class="absolute -top-6 -right-6 w-24 h-24 bg-yellow-400 rounded-full opacity-20"></div>
+                        <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-blue-400 rounded-full opacity-20"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Xususiyatlar -->
+    <section id="features" class="py-16 bg-white px-4">
+        <div class="container mx-auto fade-in-up">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Nima uchun ushbu shablon?</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Zamonaviy texnologiyalar va eng yaxshi amaliyotlar yordamida yaratilgan mukammal yechim
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Xususiyat 1 -->
+                <div class="bg-gray-50 rounded-xl p-6 hover-lift border border-gray-100">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 text-white flex items-center justify-center text-xl font-bold mb-4">
+                        1
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Tez Sozlash</h5>
+                    <p class="text-gray-600">5 daqiqa ichida shabloni o'rnatib, ishga tushirishingiz mumkin. To'liq hujjatlar va qo'llanmalar mavjud.</p>
+                </div>
+
+                <!-- Xususiyat 2 -->
+                <div class="bg-gray-50 rounded-xl p-6 hover-lift border border-gray-100">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-green-500 to-green-600 text-white flex items-center justify-center text-xl font-bold mb-4">
+                        2
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Responsive Dizayn</h5>
+                    <p class="text-gray-600">Barcha qurilmalar (telefon, planshet, noutbuk) uchun mukammal moslashtirilgan interfeys.</p>
+                </div>
+
+                <!-- Xususiyat 3 -->
+                <div class="bg-gray-50 rounded-xl p-6 hover-lift border border-gray-100">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 text-white flex items-center justify-center text-xl font-bold mb-4">
+                        3
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Dark Mode</h5>
+                    <p class="text-gray-600">Foydalanuvchi imkoniyatiga qarab oq yoki qora mavzuni tanlash. Avtomatik tizim mavzusini aniqlash.</p>
+                </div>
+
+                <!-- Xususiyat 4 -->
+                <div class="bg-gray-50 rounded-xl p-6 hover-lift border border-gray-100">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-red-500 to-red-600 text-white flex items-center justify-center text-xl font-bold mb-4">
+                        4
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">SEO Tayyor</h5>
+                    <p class="text-gray-600">Meta-teglar, semantic HTML va tez yuklanish tezligi bilan Google'da yuqori o'rinlarni zabt eting.</p>
+                </div>
+
+                <!-- Xususiyat 5 -->
+                <div class="bg-gray-50 rounded-xl p-6 hover-lift border border-gray-100">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-yellow-500 to-yellow-600 text-white flex items-center justify-center text-xl font-bold mb-4">
+                        5
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Modulli Komponentlar</h5>
+                    <p class="text-gray-600">Har bir komponent alohida ishlatilishi mumkin. O'zingizning dizayningizga moslashtirish oson.</p>
+                </div>
+
+                <!-- Xususiyat 6 -->
+                <div class="bg-gray-50 rounded-xl p-6 hover-lift border border-gray-100">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 text-white flex items-center justify-center text-xl font-bold mb-4">
+                        6
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Yangi Animatsiyalar</h5>
+                    <p class="text-gray-600">Ajoyib foydalanuvchi tajribasi uchun silliq animatsiyalar va interaktiv effektlar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistika -->
+    <section id="stats" class="py-16 gradient-bg text-white px-4">
+        <div class="container mx-auto fade-in-up">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                <div>
+                    <div class="text-4xl font-bold mb-2">12k+</div>
+                    <p class="text-blue-100">Faol Foydalanuvchilar</p>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold mb-2">98%</div>
+                    <p class="text-blue-100">Qoniqish Darajasi</p>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold mb-2">1.2s</div>
+                    <p class="text-blue-100">O'rtacha Yuklanish</p>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold mb-2">24/7</div>
+                    <p class="text-blue-100">Qo'llab-Quvvatlash</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mijozlar fikri -->
+    <section class="py-16 bg-gray-50 px-4">
+        <div class="container mx-auto fade-in-up">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Mijozlar Fikri</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Ishonchli tajribalar va ijobiy fikrlar haqida</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Sharh 1 -->
+                <div class="bg-white rounded-xl p-6 shadow-md hover-lift">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://i.pravatar.cc/150?img=8" alt="Javlon" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900">Javlon</h4>
+                            <p class="text-sm text-blue-600">Dasturchi</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"Bu shablon bizning loyihamizni 3 baravar tezroq yakunlashimizga yordam berdi. Kod sifatidan mamnunman."</p>
+                </div>
+
+                <!-- Sharh 2 -->
+                <div class="bg-white rounded-xl p-6 shadow-md hover-lift">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://i.pravatar.cc/150?img=11" alt="Laylo" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900">Laylo</h4>
+                            <p class="text-sm text-blue-600">Loyiha Menedjeri</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"Dizayn juda zamonaviy va foydalanuvchilar interfeysdan mamnun. Sozlash jarayoni oson va tez."</p>
+                </div>
+
+                <!-- Sharh 3 -->
+                <div class="bg-white rounded-xl p-6 shadow-md hover-lift">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://i.pravatar.cc/150?img=12" alt="Timur" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900">Timur</h4>
+                            <p class="text-sm text-blue-600">Sifat Nazoratchisi</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"Kod strukturasi aniq va toza. Xatolarni topish va tuzatish juda oson. Samaradorlik yuqori."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Narxlar -->
+    <section id="pricing" class="py-16 px-4">
+        <div class="container mx-auto fade-in-up">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Rejalar</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Oddiydan professionalgacha - ehtiyojingizga mos</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Basic reja -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-200 hover-lift">
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Basic</h3>
+                        <div class="flex items-baseline mb-4">
+                            <span class="text-5xl font-bold text-gray-900">$0</span>
+                            <span class="text-gray-500 ml-2">/oyiga</span>
+                        </div>
+                        <p class="text-gray-600">Boshlang'ich loyihalar uchun mukammal</p>
+                    </div>
+                    
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Statik sahifalar</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>CDN orqali Tailwind</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Dark mode</span>
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-times mr-3"></i>
+                            <span>Qo'shimcha komponentlar</span>
+                        </li>
+                    </ul>
+                    
+                    <button class="w-full bg-gray-900 hover:bg-gray-800 text-white font-medium py-3 rounded-lg transition-colors duration-300">
+                        Boshlash
+                    </button>
+                </div>
+
+                <!-- Pro reja (Featured) -->
+                <div class="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-8 shadow-2xl transform hover:-translate-y-1 transition-transform duration-300 relative">
+                    <div class="absolute top-0 right-6 -translate-y-1/2">
+                        <span class="bg-yellow-400 text-gray-900 text-sm font-bold py-1 px-4 rounded-full">Eng mashhur</span>
+                    </div>
+                    
+                    <div class="mb-6 text-white">
+                        <h3 class="text-2xl font-bold mb-2">Pro</h3>
+                        <div class="flex items-baseline mb-4">
+                            <span class="text-5xl font-bold">$29</span>
+                            <span class="ml-2 opacity-90">/oyiga</span>
+                        </div>
+                        <p class="opacity-90">Kichik bizneslar uchun ideal</p>
+                    </div>
+                    
+                    <ul class="space-y-3 mb-8 text-white">
+                        <li class="flex items-center">
+                            <i class="fas fa-check mr-3"></i>
+                            <span>Qo'shimcha komponentlar</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check mr-3"></i>
+                            <span>Blog bo'limi</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check mr-3"></i>
+                            <span>Tezkor qo'llab-quvvatlash</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check mr-3"></i>
+                            <span>Premium shablonlar</span>
+                        </li>
+                    </ul>
+                    
+                    <button class="w-full bg-white hover:bg-gray-100 text-blue-600 font-bold py-3 rounded-lg transition-colors duration-300">
+                        Boshlash
+                    </button>
+                </div>
+
+                <!-- Business reja -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-200 hover-lift">
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Business</h3>
+                        <div class="flex items-baseline mb-4">
+                            <span class="text-5xl font-bold text-gray-900">$79</span>
+                            <span class="text-gray-500 ml-2">/oyiga</span>
+                        </div>
+                        <p class="text-gray-600">Korporativ loyihalar uchun</p>
+                    </div>
+                    
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Jamoa funksiyalari</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Integratsiyalar</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Uzoq muddatli support</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Maxsus modullar</span>
+                        </li>
+                    </ul>
+                    
+                    <button class="w-full bg-gray-900 hover:bg-gray-800 text-white font-medium py-3 rounded-lg transition-colors duration-300">
+                        Bog'lanish
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog yangiliklari -->
+    <section id="blog" class="py-16 bg-gray-50 px-4">
+        <div class="container mx-auto fade-in-up">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Blog Yangiliklari</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">So'nggi maqolalar va foydali qo'llanmalar</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Blog 1 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-md hover-lift">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Tailwind CSS" 
+                             class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Tailwind bilan tez start</h3>
+                        <p class="text-gray-600 mb-4">Tailwind CSS yordamida qanday qilib professional web-interfeyslarni tezda yaratish mumkin.</p>
+                        <a href="#" class="text-blue-600 font-medium flex items-center hover:text-blue-800 transition-colors">
+                            O'qish <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Blog 2 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-md hover-lift">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="SEO" 
+                             class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">SEO Asoslari</h3>
+                        <p class="text-gray-600 mb-4">2025 yil uchun eng samarali SEO strategiyalari va amaliy maslahatlar.</p>
+                        <a href="#" class="text-blue-600 font-medium flex items-center hover:text-blue-800 transition-colors">
+                            O'qish <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Blog 3 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-md hover-lift">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Dizayn" 
+                             class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Dizayn Printsplari</h3>
+                        <p class="text-gray-600 mb-4">Zamonaviy web-dizaynning asosiy tamoyillari va ularni qo'llash usullari.</p>
+                        <a href="#" class="text-blue-600 font-medium flex items-center hover:text-blue-800 transition-colors">
+                            O'qish <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-16 px-4">
+        <div class="container mx-auto fade-in-up">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Ko'p So'raladigan Savollar</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Tez-tez beriladigan savollarga javoblar</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <!-- FAQ 1 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <h3 class="text-lg font-bold text-gray-900 mb-3">Tailwindni qanday ulayman?</h3>
+                    <p class="text-gray-600">CDN orqali yoki npm paket menejeri orqali o'rnatishingiz mumkin. To'liq qo'llanma dokumentatsiyada mavjud.</p>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <h3 class="text-lg font-bold text-gray-900 mb-3">Dark mode qanday ishlaydi?</h3>
+                    <p class="text-gray-600">Tizim mavzusini avtomatik aniqlash yoki foydalanuvchi tanlovi asosida ishlaydi. Sozlash uchun maxsus CSS klasslari mavjud.</p>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <h3 class="text-lg font-bold text-gray-900 mb-3">SEO uchun nimalar qildik?</h3>
+                    <p class="text-gray-600">Semantik HTML, tez yuklanish, responsive design, meta-teglar va sitemap generatori bilan ta'minladik.</p>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <h3 class="text-lg font-bold text-gray-900 mb-3">Qanday kengaytiraman?</h3>
+                    <p class="text-gray-600">Modulli tuzilma tufayli yangi komponentlar qo'shish oson. JavaScript va CSS fayllarini alohida kengaytirishingiz mumkin.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8 px-4">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+                <!-- Kompaniya haqida -->
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                            <span class="font-bold text-lg">M</span>
+                        </div>
+                        <h3 class="text-xl font-bold">Ma'lumotli Sayt</h3>
+                    </div>
+                    <p class="text-gray-400 mb-6">Chiroyli va ma'lumotli shablonlar bilan biznesingizni rivojlantiring.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Havolalar -->
+                <div>
+                    <h3 class="text-lg font-bold mb-6">Havolalar</h3>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="#features" class="text-gray-400 hover:text-white transition-colors">Xususiyatlar</a>
+                        </li>
+                        <li>
+                            <a href="#pricing" class="text-gray-400 hover:text-white transition-colors">Narxlar</a>
+                        </li>
+                        <li>
+                            <a href="#blog" class="text-gray-400 hover:text-white transition-colors">Blog</a>
+                        </li>
+                        <li>
+                            <a href="#faq" class="text-gray-400 hover:text-white transition-colors">FAQ</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Huquqiy -->
+                <div>
+                    <h3 class="text-lg font-bold mb-6">Huquqiy</h3>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors">Foydalanish shartlari</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors">Maxfiylik siyosati</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors">Cookie siyosati</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors">Litsenziya</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Obuna bo'lish -->
+                <div>
+                    <h3 class="text-lg font-bold mb-6">Yangiliklardan xabardor bo'ling</h3>
+                    <p class="text-gray-400 mb-4">Yangi xususiyatlar va yangilanishlar haqida birinchi bo'lib biling</p>
+                    <form class="space-y-3">
+                        <div class="flex flex-col sm:flex-row gap-2">
+                            <input 
+                                type="email" 
+                                placeholder="Email manzilingiz" 
+                                class="bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                            <button 
+                                type="submit" 
+                                class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 whitespace-nowrap"
+                            >
+                                Obuna bo'lish
+                            </button>
+                        </div>
+                        <p class="text-sm text-gray-500">Maxfiylik siyosati bilan tanishib chiqing</p>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="pt-8 border-t border-gray-800 text-center">
+                <p class="text-gray-400">© 2025 Ma'lumotli Sayt. Barcha huquqlar himoyalangan.</p>
+                <p class="text-gray-500 text-sm mt-2">Designed with <i class="fas fa-heart text-red-500 mx-1"></i> for developers</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Yuqoriga qaytish tugmasi -->
+    <button 
+        id="scrollToTop" 
+        class="fixed bottom-6 right-6 w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hidden items-center justify-center z-40"
+    >
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Dark/Light mode toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        themeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.className = 'fas fa-sun text-yellow-400';
+                document.body.style.backgroundColor = '#1a202c';
+            } else {
+                themeIcon.className = 'fas fa-moon text-gray-600';
+                document.body.style.backgroundColor = '#f9fafb';
+            }
+        });
+
+        // Mobil menyu
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Tashqariga bosilganda menyuni yopish
+            document.addEventListener('click', function(event) {
+                if (!mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        }
+
+        // Yuqoriga qaytish tugmasi
+        const scrollToTopButton = document.getElementById('scrollToTop');
+        
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                scrollToTopButton.classList.remove('hidden');
+                scrollToTopButton.classList.add('flex');
+            } else {
+                scrollToTopButton.classList.add('hidden');
+                scrollToTopButton.classList.remove('flex');
+            }
+        });
+        
+        if (scrollToTopButton) {
+            scrollToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+
+        // Silliq scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Mobil menyuni yopish
+                    if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+
+        // Form yuborish
+        const form = document.querySelector('form');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const emailInput = this.querySelector('input[type="email"]');
+                
+                if (emailInput.value) {
+                    // Bu yerda haqiqiy form yuborish logikasi bo'lishi kerak
+                    alert('Obuna muvaffaqiyatli amalga oshirildi! Tez orada siz bilan bog\'lanamiz.');
+                    emailInput.value = '';
+                }
+            });
+        }
+
+        // Animatsiyalar
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Fade-in elementlarini kuzatish
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(el);
+        });
+
+        // Yuklanish animatsiyasi
+        window.addEventListener('load', function() {
+            document.body.classList.add('loaded');
+        });
+    </script>
+</body>
 </html>
